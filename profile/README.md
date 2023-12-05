@@ -76,6 +76,22 @@ don't hog the CPU and Higher proiority tasks get completed quicker.
 - Server and Worker has its own Docs please refer them for more information (Even these are WIP and are subject to change when new changes are introduced as its still in its
 early stages.)
 
+## Setup/Requirements
+
+- Ubuntu 20.04 or lower/Debian 9 or lower (due to mssql support issue on newer builds)
+- `mssql` library for MS SQL server (Look up online fourms for install guide) Note:- password and database name should match that of `configs.cpp` or you need to edit `configs.cpp`.
+- `boost` libs (recommended to install 1.66 but latest will also work)
+
+## Build
+- Download the source code.
+- Cd to directory and type `make`.
+  
+## Run
+- The binary is created in `/bin` directory.
+- Execute the binary and follow the server and worker creation.
+- To execute server on local host give IP Address as `1.1.1.1`.
+- You need a SQL DB with the schema as mentioned in `configs.cpp` (if not present then wait for me to push).
+
 ## I wanna contribute!
 
 - Contact me on [Gmail](tejasudupa1285@gmail.com)
