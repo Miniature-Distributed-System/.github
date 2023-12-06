@@ -92,6 +92,26 @@ early stages.)
 - To execute server on local host give IP Address as `1.1.1.1`.
 - You need a SQL DB with the schema as mentioned in `configs.cpp` (if not present then wait for me to push).
 
+## Immidiate Changes
+
+- Move from Makefile to CMAKE.
+- CI/CD Flows for automated building/testing.
+- Updation of existing Test Modules.
+- Check if all Modules of Server/Worker are working as expected.
+- Move from MYSQL to MongoDB (Thanks to microsoft for not updating its libs, which has broken installs on new Linux releases)
+
+## Future Changes
+
+- [Near Future] Introduction of new metrics for better worker cost calculation in Server.
+- [Near Future] Introduction of better metrics which calculate worker load more accurately in Worker.
+- [Near Future] Serial/parellel algorithm processing.
+- [ASAP] Better test modules to test the whole infrastructure.
+- [ASAP] CI/CD test logging and reporting.
+- [Far Future] Multi-server support.
+- [Future] Think of better use case for project.
+- [Future] Build WebApp either ASP.Net or another framework.
+- [Far Future] Algorithm building in WebApp and processing of algorithm in Worker aka Templates will not only have data but also Algorithm logic for processing the data.
+
 ## I wanna contribute!
 
 - Contact me on [Gmail](tejasudupa1285@gmail.com)
