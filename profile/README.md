@@ -35,38 +35,53 @@ may contain timestamp, heart rate, blood pressure, breath rate, blood compositio
 - As previosly mentioned it comprises of web app, server and worker units lets see how they communicate and work togather. Words used here may or may not be present in the
 actual system I am trying to explain in as simple words as possible.
 
-#### WebApp
-- When the client uploads data file to the webapp it is pushed into a SQL Server DB (this database is subject to change in the near future. Thnx Microsoft) in the 'user data' table.
-- The Database would create a record for this data with various parameters which are all set to NULL/not present/not applicable.
-- The client then submits file for processing, now this is where the fun begins.
-- The Database sets the file record's submitted for processing as true.
+## WebApp
+- Step 1:
+   - When the client uploads data file to the webapp it is pushed into a SQL Server DB (this database is subject to change in the near future. Thnx Microsoft) in the 'user data' table.
+- Step 2:
+   - The Database would create a record for this data with various parameters which are all set to NULL/not present/not applicable.
+- Step 3:
+   - The client then submits file for processing, now this is where the fun begins.
+Step 4:
+   - The Database sets the file record's submitted for processing as true.
   
-#### Server
-- Server is polling the Database continuosly and checking the 'user data' table for any updates.
-- The Server keeps a timestamp and checks against all the latest timestamps in the database to see any new records were submitted and checks their 'submitted for processing'
-(Note this is also somewhat over-ridden cause this was initally a VTU project for my final year and many features had to be purged to meet deadlines.)
-- The Server pulls all the names of the files to be processed and passes it to the `DataExtactor` which extracts the information from the file and creates a data structure
-which will be used later for sending out the data.
-- The `DataExtactor` schedules the Data to be sent out the worker nodes.
-- The `SenderCore` checks for avialable Workers. It finds the ideal worker for sending out this data for processing.
-- The Selected `Worker` is queued with this data and when the assigned worker responds by locking a websocket coonection the `Worker` is sent this data in form of a `json`
-string.
-- The Server polls the worker for a acknowledgement of sent data and if not received it pushes the data again and waits.
+## Server
 
-#### Worker
+- Step 1:
+   - Server is polling the Database continuosly and checking the 'user data' table for any updates.
+   - The Server keeps a timestamp and checks against all the latest timestamps in the database to see any new records were submitted and checks their 'submitted for processing'
+   (Note this is also somewhat over-ridden cause this was initally a VTU project for my final year and many features had to be purged to meet deadlines.)
+   - The Server pulls all the names of the files to be processed and passes it to the `DataExtactor` which extracts the information from the file and creates a data structure
+   which will be used later for sending out the data.
+- Step 2:
+   - The `DataExtactor` schedules the Data to be sent out the worker nodes.
+- Step 3:
+   - The `SenderCore` checks for avialable Workers. It finds the ideal worker for sending out this data for processing.
+- Step 4:
+   - The Selected `Worker` is queued with this data and when the assigned worker responds by locking a websocket coonection the `Worker` is sent this data in form of a `json`
+string.
+- Step 5:
+   - The Server polls the worker for a acknowledgement of sent data and if not received it pushes the data again and waits.
+
+## Worker
 - The worker units are also known as volenteer units as they are hosted by users who have volenteered to donate a part of their PC for processing. The volenteer host has the
 worker program running on thier system. Its configured to use a certain amount of resources on the host system therfore the program doesn't overrun its resource allocated.
-- Worker has the websocket always running and when it receives the data from the server it passes it the `Receiver` unit and pre-processes the packet in form of `json` string
-if the packet is corrupted the packet is dropped and ERROR is sent out if partially corrupted else abandonded.
-- If packet is required format then the acknowledgement is sent out to the server.
-- The Received data is analysed by the `Receiver` and checked weather it is a `User data` or `Template` (This template is a format the user data needs follow and rules for
-processing this data). And if found to be a User data (one sent by client in webapp) then it extracts feilds from `json` and sends it to `DataProcessor` unit.
-- The `DataProcessor` checks validity of data against the rules(if against rules ERROR is sent out to server) and deletes duplicate data for ease of processing.
-- The `DataProcessor` once done with its job it pushes it to the final unit `Algorithm`.
-- `Algorithm` unit is the final unit. Every user data has a algorithm specification. The `Algorithm` module checks this and uses the correct the correct algoirthm for
-processing the data. The final processed result is generated and sent out to the `Sender` unit.
-- The `Sender` unit creates a packet and sends it out to the Server.
-- Sever updates this in the Database with result and cleaned data from worker.
+- Step 1:
+   - Worker has the websocket always running.
+   - When it receives the data from the server it passes it the `Receiver` unit and pre-processes the packet in form of `json` string if the packet is corrupted the packet is dropped and ERROR is sent out if partially corrupted else abandonded.
+   - If packet is required format then the acknowledgement is sent out to the server.
+- Step 2:
+   - The Received data is analysed by the `Receiver` and checked weather it is a `User data` or `Template` (This template is a format the user data needs follow and rules for
+   processing this data). And if found to be a User data (one sent by client in webapp) then it extracts feilds from `json` and sends it to `DataProcessor` unit.
+- Step 3:
+   - The `DataProcessor` checks validity of data against the rules(if against rules ERROR is sent out to server) and deletes duplicate data for ease of processing.
+   - The `DataProcessor` once done with its job it pushes it to the final unit `Algorithm`.
+- Step 4:
+   - `Algorithm` unit is the final unit. Every user data has a algorithm specification. The `Algorithm` module checks this and uses the correct the correct algoirthm for
+   processing the data. The final processed result is generated and sent out to the `Sender` unit.
+- Step 5:
+   - The `Sender` unit creates a packet and sends it out to the Server.
+   - Sever updates this in the Database with result and cleaned data from worker.
 
 - `Receiver`,  `DataProcessor` and `Algorithm` from a pipeline also known as User data pipeline. These units run one after another.
 - Note:- Worker has an internal scheduler to manage `Receiver`,  `DataProcessor` and `Algorithm` units, they are not continuosly executed rather time slotted and executed.
@@ -94,25 +109,25 @@ early stages.)
 
 ## Immidiate Changes
 
-- Move from Makefile to CMAKE.
-- CI/CD Flows for automated building/testing.
-- Updation of existing Test Modules.
-- Check if all Modules of Server/Worker are working as expected.
-- Move from MYSQL to MongoDB (Thanks to microsoft for not updating its libs, which has broken installs on new Linux releases)
+- [ ] Move from Makefile to CMAKE.
+- [ ] CI/CD Flows for automated building/testing.
+- [ ] Updation of existing Test Modules.
+- [ ] Check if all Modules of Server/Worker are working as expected.
+- [ ] Move from MYSQL to MongoDB (Thanks to microsoft for not updating its libs, which has broken installs on new Linux releases)
 
 ## Future Changes
 
-- [Near Future] Introduction of new metrics for better worker cost calculation in Server.
-- [Near Future] Introduction of better metrics which calculate worker load more accurately in Worker.
-- [Near Future] Serial/parellel algorithm processing.
-- [ASAP] Better test modules to test the whole infrastructure.
-- [ASAP] CI/CD test logging and reporting.
-- [Far Future] Multi-server support.
-- [Future] Think of better use case for project.
-- [Future] Build WebApp either ASP.Net or another framework.
-- [Far Future] Algorithm building in WebApp and processing of algorithm in Worker aka Templates will not only have data but also Algorithm logic for processing the data.
+- [ ] [Near Future] Introduction of new metrics for better worker cost calculation in Server.
+- [ ] [Near Future] Introduction of better metrics which calculate worker load more accurately in Worker.
+- [ ] [Near Future] Serial/parellel algorithm processing.
+- [ ] [ASAP] Better test modules to test the whole infrastructure.
+- [ ] [ASAP] CI/CD test logging and reporting.
+- [ ] [Far Future] Multi-server support.
+- [ ] [Future] Think of better use case for project.
+- [ ] [Future] Build WebApp either ASP.Net or another framework.
+- [ ] [Far Future] Algorithm building in WebApp and processing of algorithm in Worker aka Templates will not only have data but also Algorithm logic for processing the data.
 
-## I wanna contribute!
+## I wanna contribute Yeeeey :))!
 
 - Contact me on [Gmail](tejasudupa1285@gmail.com)
 - Contact me on Telegram: @trax85
