@@ -120,6 +120,7 @@ early stages.)
 - [ ] [Near Future] Introduction of new metrics for better worker cost calculation in Server.
 - [ ] [Near Future] Introduction of better metrics which calculate worker load more accurately in Worker.
 - [ ] [Near Future] Serial/parellel algorithm processing.
+- [ ] [ASAP] Seperate Queues for different task priority.
 - [ ] [ASAP] Better test modules to test the whole infrastructure.
 - [ ] [ASAP] CI/CD test logging and reporting.
 - [ ] [Far Future] Multi-server support.
@@ -127,7 +128,7 @@ early stages.)
 - [ ] [Future] Build WebApp either ASP.Net or another framework.
 - [ ] [Far Future] Algorithm building in WebApp and processing of algorithm in Worker aka Templates will not only have data but also Algorithm logic for processing the data.
 
-## I wanna contribute Yeeeey :))!
+## Yeeey I wanna contribute :))!
 
 - Contact me on [Gmail](tejasudupa1285@gmail.com)
 - Contact me on Telegram: @trax85
