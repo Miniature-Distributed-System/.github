@@ -109,6 +109,7 @@ early stages.)
 
 ## Immidiate Changes
 
+- [ ] Encryption (Auto encrypt) of packets and CRC check for data.
 - [ ] Move from Makefile to CMAKE.
 - [ ] CI/CD Flows for automated building/testing.
 - [ ] Updation of existing Test Modules.
