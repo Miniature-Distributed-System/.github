@@ -97,25 +97,39 @@ early stages.)
 - `mssql` library for MS SQL server (Look up online fourms for install guide) Note:- password and database name should match that of `configs.cpp` or you need to edit `configs.cpp`.
 - `boost` libs (recommended to install 1.66 but latest will also work)
 
-## Build
+## Build & Run
 - Download the source code.
-- Cd to directory and type `make`.
+
+### Worker
+- Go to working directory `cd worker_unit`
+- type `make clean` followed by `make`
+- After successful build navigate to `/bin` where the binary is created
+- Launch the binary in terminal `./worker`
+- Enter the IP address and port number of server and threads the worker can use.
+- Once done worker will start logging process and standby for server to send data.
   
-## Run
-- The binary is created in `/bin` directory.
-- Execute the binary and follow the server and worker creation.
-- To execute server on local host give IP Address as `1.1.1.1`.
-- You need a SQL DB with the schema as mentioned in `configs.cpp` (if not present then wait for me to push).
+### Server
+- Go to working directory `cd server_unit`
+- type `make clean` followed by `make`
+- After successful build navigate to `/bin`  where the binary is created
+- Launch the binary in terminal `./server`
+- Enter the IP address the server will be using. (use `0.0.0.0` if server and worker on localhost, basically for testing purposes.)
+- Enter port number on which server will be listening on.
+- Enter threads server is allowed to use.
+- Enter the Database information if left empty it will take default configs from `configs.cpp`.
+- Once done server will initilize and will wait for worker units to connect and webapp to populate database.
 
 ## Immidiate Changes
 
 - [ ] Remove global objects and use Dependency injection.
-- [ ] Encryption (Auto encrypt) of packets and CRC check for data.
+- [ ] Encryption (AES/DES/SHA etc) of packets and CRC check for data.
 - [ ] Move from Makefile to CMAKE.
 - [ ] CI/CD Flows for automated building/testing.
 - [ ] Updation of existing Test Modules.
 - [ ] Check if all Modules of Server/Worker are working as expected.
 - [ ] Move from MYSQL to MongoDB (Thanks to microsoft for not updating its libs, which has broken installs on new Linux releases)
+- [ ] Custom Test methods and env.
+- [ ] Fix/Update Existing test modules and make use of DI.
 
 ## Future Changes
 
