@@ -83,6 +83,23 @@ worker program running on thier system. Its configured to use a certain amount o
    - The `Sender` unit creates a packet and sends it out to the Server.
    - Sever updates this in the Database with result and cleaned data from worker.
 
+## Server Again
+
+- Step 1:
+   - The server connects back to the worker and receives the result from worker.
+   - The results are prevalidated.
+   - The packet is pushed into receiver sink.
+- Step 2:
+   - The packet is popped from the receiver sink by the Packet processor module.
+   - The packet processor extracts the json packet feilds from the Packet.
+   - The packet is identfied as either a Message or Result data. Messages could be acknowledgment or failure types.
+ -Step 3:
+   - If packet Message type is ACK then ACK mask is analysed the Outgoing Data Registry is updated for this packet/data.
+   - If packet Message type is ERROR then error mask is analysed and necessary actions are taken (packet transfer failure or data has error).
+   - if packet is data then the data is validated and updated into the Database repository. later the Outgoing Data Registry is also updated.
+     
+- This marks the end of the whole Webapp -> Server -> Worker -> Server Again pipeline.     
+
 - `Receiver`,  `DataProcessor` and `Algorithm` from a pipeline also known as User data pipeline. These units run one after another.
 - Note:- Worker has an internal scheduler to manage `Receiver`,  `DataProcessor` and `Algorithm` units, they are not continuosly executed rather time slotted and executed.
 Each unit gets a slice of the CPU time and re-queued if they overrun their time slot, This allows other processes/pipelines to have a chance at using the CPU so large data
