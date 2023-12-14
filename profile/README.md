@@ -93,9 +93,10 @@ early stages.)
 
 ## Setup/Requirements
 
-- Ubuntu 20.04 or lower/Debian 9 or lower (due to mssql support issue on newer builds)
-- `mssql` library for MS SQL server (Look up online fourms for install guide) Note:- password and database name should match that of `configs.cpp` or you need to edit `configs.cpp`.
-- `boost` libs (recommended to install 1.66 but latest will also work)
+- Ubuntu 20.04 or lower/Debian 9 or lower (this is due to `mssql` libs support issue on newer builds)
+- `mssql` library for MS SQL server (Look up online fourms for install guide) Note:- password and database name should match that of `configs.cpp` or you need to edit `configs.cpp` or during server start up else server won't initilize and will throw error.
+- `boost` libs (recommended to install `1.66` but latest should work without any issues).
+- `sqlite3` libs for worker (This is no more being used and will be soon removed. We have moved to flatfile system).
 
 ## Build & Run
 - Download the source code.
@@ -120,6 +121,8 @@ early stages.)
 - Once done server will initilize and will wait for worker units to connect and webapp to populate database.
 
 ## Immidiate Changes
+#### Things that need to be done now, critical stuff
+<br/>
 
 - [ ] Remove global objects and use Dependency injection.
 - [ ] Encryption (AES/DES/SHA etc) of packets and CRC check for data.
@@ -132,16 +135,19 @@ early stages.)
 - [ ] Fix/Update Existing test modules and make use of DI.
 
 ## Future Changes
+#### Things that will be done once above is complete and ideas for future
+<br/>
 
-- [ ] [Near Future] Introduction of new metrics for better worker cost calculation in Server.
-- [ ] [Near Future] Introduction of better metrics which calculate worker load more accurately in Worker.
-- [ ] [Near Future] Serial/parellel algorithm processing.
+- [ ] [ASAP] Think of better use case for the project (shifting later would cause a lot of hassel).
 - [ ] [ASAP] Seperate Queues for different task priority.
-- [ ] [ASAP] Better test modules to test the whole infrastructure.
+- [ ] [ASAP] More Refined test modules and test for all modules in various scenarios so as to test the whole infrastructure.
 - [ ] [ASAP] CI/CD test logging and reporting.
-- [ ] [Far Future] Multi-server support.
-- [ ] [Future] Think of better use case for project.
+- [ ] [Near Future] Logger Module, This module will log to file using sockets or any other IPC construct.
+- [ ] [Near Future] Introduction of New metrics for better worker cost calculation in Server.
+- [ ] [Near Future] Introduction of Better metrics which calculate worker load more accurately in Worker.
+- [ ] [Future] Add support for both Serial/parellel algorithm processing.
 - [ ] [Future] Build WebApp either ASP.Net or another framework.
+- [ ] [Far Future] Multi-server support.
 - [ ] [Far Future] Algorithm building in WebApp and processing of algorithm in Worker aka Templates will not only have data but also Algorithm logic for processing the data.
 
 ## Yeeey I wanna contribute :))!
