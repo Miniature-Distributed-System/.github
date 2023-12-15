@@ -160,6 +160,7 @@ early stages.)
 - [ ] [ASAP] More Refined test modules and test for all modules in various scenarios so as to test the whole infrastructure.
 - [ ] [ASAP] CI/CD test logging and reporting.
 - [ ] [Near Future] Logger Module, This module will log to file using sockets or any other IPC construct.
+- [ ] [Near Future] CLI Interface and Interpretter for various commands.
 - [ ] [Near Future] Introduction of New metrics for better worker cost calculation in Server.
 - [ ] [Near Future] Introduction of Better metrics which calculate worker load more accurately in Worker.
 - [ ] [Future] Add support for both Serial/parellel algorithm processing.
