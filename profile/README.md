@@ -141,7 +141,8 @@ early stages.)
 #### Things that need to be done now, critical stuff
 <br/>
 
-- [ ] Remove global objects and use Dependency injection.
+- [x] [Worker] Remove global objects and use Dependency injection.
+- [ ] [Server] Remove global objects and use Dependency injection.
 - [ ] Encryption (AES/DES/SHA etc) of packets and CRC check for data.
 - [ ] Move from Makefile to CMAKE.
 - [ ] CI/CD Flows for automated building/testing.
