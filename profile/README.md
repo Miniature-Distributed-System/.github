@@ -142,6 +142,7 @@ early stages.)
 <br/>
 
 - [x] [Worker] Remove global objects and use Dependency injection.
+- [x] [Worker] Cleanup json libs and use heapsy.
 - [ ] [Server] Remove global objects and use Dependency injection.
 - [ ] Encryption (AES/DES/SHA etc) of packets and CRC check for data.
 - [ ] Move from Makefile to CMAKE.
